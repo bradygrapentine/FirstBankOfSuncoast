@@ -1,0 +1,44 @@
+PEDAC => FirstBankOfSuncoast
+=======================================================================
+Problem:
+
+General Statement => Create a console app that allows a 
+user to manage savings and checking banking transactions.
+(Save and retrieve data via reading from and writing to CSV file)
+
+=======================================================================
+Examples:
+
+- Deposit $10 to checking account.
+- Deposit $10 to savings account.
+- Withdraw $10 from checking account.
+- Withdraw $10 from savings account.
+- Transfer $10 from checking account to savings account.
+- Transfer $10 from savings account to checking account.
+- Display savings account balance...$500 in account.
+- Display checking account balance...$500 in account.
+- Display savings account transactions...100 transactions displayed.
+- Display checking account transactions...100 transactions displayed.
+
+=======================================================================
+Data Structures:
+
+- Transaction(Class)	Properties:			Methods:
+			- TransactionAmount(Double)	- Description: Describes the transaction. 
+			- TransactionType(String) 
+			- TransactionTime(DateTime)
+			- AccountType(String)
+
+- Transactions(List<Transaction)
+
+- Savings Account(List<Transaction>)
+
+- Checking Account(List<Transaction>)
+
+- User Input(String or String => Double) 
+
+======================================================================
+Algorithm: 
+
+======================================================================
+Code:
