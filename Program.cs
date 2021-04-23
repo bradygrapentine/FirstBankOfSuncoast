@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using CsvHelper;
+/*
+EPIC MODE
+------------------------------------------------
+Add the ability to have more than one user. Take the time to plan out the changes needed as there are many ways to solve this problem. Include changes to the interface as well as changes to how you store the data.
+Add simple password protection.
+------------------------------------------------
+*/
 
 namespace FirstBankOfSuncoast
 {
