@@ -1,2 +1,24 @@
 TransactionType,Account,Amount,TimeOfTransaction
 deposit,checking,1000,04/22/2021 21:34:34
+deposit,savings,100,04/22/2021 21:46:40
+deposit,checking,1000,04/22/2021 21:49:46
+deposit,checking,1000,04/22/2021 21:51:08
+withdraw,checking,1000,04/22/2021 21:52:14
+deposit,checking,1000,04/22/2021 21:58:13
+withdraw,checking,2000,04/22/2021 22:15:43
+withdraw,checking,500,04/22/2021 22:16:51
+withdraw,savings,50,04/22/2021 22:17:10
+withdraw,savings,45,04/22/2021 22:19:49
+withdraw,savings,5,04/22/2021 22:20:57
+deposit,savings,5,04/22/2021 22:21:07
+deposit,checking,5,04/22/2021 22:21:15
+withdraw,checking,5,04/22/2021 22:21:21
+withdraw,savings,5,04/22/2021 22:39:03
+deposit,checking,1000,04/22/2021 23:16:23
+deposit,savings,1500,04/22/2021 23:20:12
+deposit,savings,1500,04/22/2021 23:22:49
+deposit,checking,1500,04/22/2021 23:23:02
+withdraw,savings,1500,04/22/2021 23:23:14
+withdraw,savings,1500,04/22/2021 23:23:30
+withdraw,checking,1500,04/22/2021 23:23:42
+withdraw,checking,1500,04/22/2021 23:23:49
