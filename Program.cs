@@ -5,20 +5,6 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 
-/*
-
-P:
-
-E:
-
-D:
-
-A:
-
-C:
-
-*/
-
 namespace FirstBankOfSuncoast
 {
     class Transaction
@@ -294,36 +280,7 @@ namespace FirstBankOfSuncoast
             var choice = Console.ReadLine().ToUpper();
             return choice;
         }
-        //--------------------------------------------------------------------------------------------------------------------------------//
-        //--------------------------------------------------------------------------------------------------------------------------------//
-        // static string PromptForString(string prompt)
-        // {
-        //     Console.Write(prompt);
-        //     var userInput = Console.ReadLine();
-        //     return userInput;
-        // }
-        // //--------------------------------------------------------------------------------------------------------------------------------//
-        // //--------------------------------------------------------------------------------------------------------------------------------//
-        // static double PromptForDouble(string prompt)
-        // {
-        //     Console.Write(prompt);
-        //     double userInput;
-        //     var isThisGoodInput = Double.TryParse(Console.ReadLine(), out userInput);
-        //     if (isThisGoodInput)
-        //     {
-        //         return userInput;
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("Sorry, that isn't a valid input, I'm using 0 as your answer.");
-        //         return 0;
-        //     }
-        // }
 
-        //--------------------------------------------------------------------------------------------------------------------------------//
-        // var savings = transactions.Where(transaction => transaction.TransactionType == "savings");
-        // var checking = transactions.Where(transaction => transaction.TransactionType == "checking");
-        //--------------------------------------------------------------------------------------------------------------------------------//
         static void Main(string[] args)
         {
             var userDatabase = new UserTransactions();
@@ -496,7 +453,7 @@ namespace FirstBankOfSuncoast
                             }
                         }
                         break;
-                    // case "T":
+                    // case "T": >>>>>>>>>> for transfer function
                     //     Console.Clear();
                     //     Console.WriteLine();
                     //     break;
