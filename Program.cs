@@ -32,18 +32,18 @@ namespace FirstBankOfSuncoast
         {
             if (TransactionType == "withdraw")
             {
-                return $"{Amount} was withdrawn from {Account} at {TimeOfTransaction}.";
+                return $"{Amount} was withdrawn from {Account} account at {TimeOfTransaction}.";
             }
             else
             {
-                return $"{Amount} was deposited into {Account} at {TimeOfTransaction}.";
+                return $"{Amount} was deposited into {Account} account at {TimeOfTransaction}.";
             }
         }
     }
     //--------------------------------------------------------------------------------------------------------------------------------//
     //--------------------------------------------------------------------------------------------------------------------------------//
     //--------------------------------------------------------------------------------------------------------------------------------//
-    class Database
+    class UserTransactions //This system would only work for one user. Would need to implement something to allow the database to select from different files to extend it to different users. 
     {
         private List<Transaction> transactions = new List<Transaction>();
 
@@ -82,18 +82,22 @@ namespace FirstBankOfSuncoast
                 if (isThisGoodInput)
                 {
                     newTransaction.Amount = amountMoney;
+                    transactions.Add(newTransaction);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine("Funds deposited to savings account.");
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Sorry, that isn't a valid input, I'm using 0 as your answer.");
                     newTransaction.Amount = 0;
+                    continue;
                 }
             }
-            transactions.Add(newTransaction);
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
-        public void DepositToChecking(List<Transaction> transactions)
+        public void DepositToChecking()
         {
             var newTransaction = new Transaction();
             newTransaction.TransactionType = "deposit";
@@ -107,14 +111,18 @@ namespace FirstBankOfSuncoast
                 if (isThisGoodInput)
                 {
                     newTransaction.Amount = amountMoney;
+                    transactions.Add(newTransaction);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine("Funds deposited to checking account.");
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Sorry, that isn't a valid input, I'm using 0 as your answer.");
                     newTransaction.Amount = 0;
+                    continue;
                 }
             }
-            transactions.Add(newTransaction);
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
@@ -132,14 +140,18 @@ namespace FirstBankOfSuncoast
                 if (isThisGoodInput)
                 {
                     newTransaction.Amount = amountMoney;
+                    transactions.Add(newTransaction);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine("Funds withdrawn from savings account.");
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Sorry, that isn't a valid input, I'm using 0 as your answer.");
                     newTransaction.Amount = 0;
+                    continue;
                 }
             }
-            transactions.Add(newTransaction);
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
@@ -157,15 +169,17 @@ namespace FirstBankOfSuncoast
                 if (isThisGoodInput)
                 {
                     newTransaction.Amount = amountMoney;
+                    transactions.Add(newTransaction);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine("Funds withdrawn from checking account.");
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Sorry, that isn't a valid input, I'm using 0 as your answer.");
-                    newTransaction.Amount = 0;
+                    continue;
                 }
             }
-            transactions.Add(newTransaction);
-            transactions.Add(newTransaction);
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
@@ -174,7 +188,6 @@ namespace FirstBankOfSuncoast
             foreach (var transaction in transactions)
             {
                 Console.WriteLine(transaction.Description());
-
             }
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
@@ -211,7 +224,7 @@ namespace FirstBankOfSuncoast
             Console.WriteLine("(D)eposit Funds");
             Console.WriteLine("(W)ithdraw Funds");
             // Console.WriteLine("(T)ransfer Funds");
-            Console.WriteLine("(V)iew Transactions");
+            Console.WriteLine("(V)iew All Transactions");
             Console.WriteLine("(Q)uit the Application");
             var choice = Console.ReadLine().ToUpper();
             return choice;
@@ -248,9 +261,21 @@ namespace FirstBankOfSuncoast
         //--------------------------------------------------------------------------------------------------------------------------------//
         static void Main(string[] args)
         {
+            var userDatabase = new UserTransactions();
+            userDatabase.LoadTransactionsFromCSV();
             Greeting();
-            var transactions = new List<Transaction>();
             var keepGoing = true;
+            // Console.Write("Please Enter Your Password: ");
+            // var password = Console.ReadLine();
+            // if ( = "")
+            // {
+
+            // }
+            // else if (password ==) 
+            // {
+
+            // } put a loop in around entire main after this for password protection
+
             while (keepGoing)
             {
                 var choice = Menu();
@@ -259,35 +284,53 @@ namespace FirstBankOfSuncoast
                     case "C":
                         Console.Clear();
                         Console.WriteLine();
-                        Console.WriteLine("Press S then press Enter to display savings account balance.");
-                        Console.WriteLine("Press C then press Enter to display checking account balance.");
+                        Console.Write("Savings or Checking? (Press C or S then press Enter): ");
                         var accountSelection = Console.ReadLine().ToUpper();
                         if (accountSelection == "S")
                         {
-                            Console.WriteLine(transactions.Where(transaction => transaction.Account == "savings"));
+                            userDatabase.savingsTotal();
                         }
                         else if (accountSelection == "C")
                         {
-
-                            Console.WriteLine(transactions.Where(transaction => transaction.Account == "checking"));
+                            userDatabase.checkingTotal();
                         }
-
                         break;
                     case "D":
                         Console.Clear();
                         Console.WriteLine("");
+                        Console.Write("Savings or Checking? (Press C or S then press Enter): ");
+                        var accountSelection2 = Console.ReadLine().ToUpper();
+                        if (accountSelection2 == "S")
+                        {
+                            userDatabase.DepositToSavings();
+                        }
+                        else if (accountSelection2 == "C")
+                        {
+                            userDatabase.DepositToChecking();
+                        }
                         break;
                     case "W":
                         Console.Clear();
                         Console.WriteLine("");
+                        Console.Write("Savings or Checking? (Press C or S then press Enter): ");
+                        var accountSelection3 = Console.ReadLine().ToUpper();
+                        if (accountSelection3 == "S")
+                        {
+                            userDatabase.WithdrawFromSavings();
+                        }
+                        else if (accountSelection3 == "C")
+                        {
+                            userDatabase.WithdrawFromChecking();
+                        }
                         break;
-                    case "T":
-                        Console.Clear();
-                        Console.WriteLine();
-                        break;
+                    // case "T":
+                    //     Console.Clear();
+                    //     Console.WriteLine();
+                    //     break;
                     case "V":
                         Console.Clear();
                         Console.WriteLine("");
+                        userDatabase.GetAllTransactions();
                         break;
                     case "Q":
                         Console.Clear();
@@ -296,7 +339,6 @@ namespace FirstBankOfSuncoast
                         break;
                 }
             }
-            Console.Clear();
-            Console.WriteLine("Closing First Bank of Suncoast Account Management Application");
         }
     }
+}
