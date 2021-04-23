@@ -278,7 +278,7 @@ namespace FirstBankOfSuncoast
                     Console.Clear();
                     Console.WriteLine("Sorry, that isn't a valid input.");
                     Console.WriteLine();
-                    Console.WriteLine("Either: (1) your withdrawal amount will cause your account to go negative,");
+                    Console.WriteLine("Either: (1) your transfer amount will cause your account to go negative,");
                     Console.WriteLine("        (2) you entered a negative number,");
                     Console.WriteLine("     Or (3) you entered a non-number.");
                     Console.WriteLine();
@@ -344,7 +344,7 @@ namespace FirstBankOfSuncoast
                     Console.Clear();
                     Console.WriteLine("Sorry, that isn't a valid input.");
                     Console.WriteLine();
-                    Console.WriteLine("Either: (1) your withdrawal amount will cause your account to go negative,");
+                    Console.WriteLine("Either: (1) your transfer amount will cause your account to go negative,");
                     Console.WriteLine("        (2) you entered a negative number,");
                     Console.WriteLine("     Or (3) you entered a non-number.");
                     Console.WriteLine();
