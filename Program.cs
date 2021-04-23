@@ -12,17 +12,26 @@ namespace FirstBankOfSuncoast
         public string TransactionType { get; set; }
         public string Account { get; set; }
         public double Amount { get; set; }
+        // public int ID { get; set; } >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> could set ID every time transaction is added to database and increment to total transactions easily in database but also could count transfer as one transaction and assign same ID to corresponding withdraw and transfer
         public DateTime TimeOfTransaction { get; set; } = DateTime.Now;
         //--------------------------------------------------------------------------------------------------------------------------------//
         public string Description()
         {
             if (TransactionType == "withdraw")
             {
-                return $"{Amount} was withdrawn from {Account} account at {TimeOfTransaction}.";
+                return $"${Amount} was withdrawn from {Account} account at {TimeOfTransaction}.";
+            }
+            else if (TransactionType == "withdraw for transfer")
+            {
+                return $"${Amount} was withdrawn for transfer from {Account} account at {TimeOfTransaction}.";
+            }
+            else if (TransactionType == "deposit for transfer")
+            {
+                return $"${Amount} was deposited for transfer into {Account} account at {TimeOfTransaction}.";
             }
             else
             {
-                return $"{Amount} was deposited into {Account} account at {TimeOfTransaction}.";
+                return $"${Amount} was deposited into {Account} account at {TimeOfTransaction}.";
             }
         }
     }
@@ -232,6 +241,138 @@ namespace FirstBankOfSuncoast
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
+        public void TransferFromChecking()
+        {
+            var keepAsking = true;
+            var counter = 0;
+            while (keepAsking)
+            {
+                Console.WriteLine();
+                Console.WriteLine("How much money would you like to transfer from checking to savings? ");
+                double amountMoney;
+                var isThisGoodInput = Double.TryParse(Console.ReadLine(), out amountMoney);
+                if (isThisGoodInput && amountMoney > 0 && ((checkingTotal() - amountMoney) >= 0))
+                {
+                    var newTransaction = new Transaction();
+                    newTransaction.TransactionType = "withdraw for transfer";
+                    newTransaction.Account = "checking";
+                    newTransaction.Amount = amountMoney;
+                    transactions.Add(newTransaction);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine();
+                    Console.WriteLine("Funds withdrawn from checking account.");
+                    var newTransaction2 = new Transaction();
+                    newTransaction2.TransactionType = "deposit for transfer";
+                    newTransaction2.Account = "savings";
+                    Console.WriteLine();
+                    newTransaction2.Amount = amountMoney;
+                    transactions.Add(newTransaction2);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine();
+                    Console.WriteLine("Funds deposited to savings account.");
+                    Console.WriteLine();
+                    keepAsking = false;
+                }
+                else if (counter == 3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Sorry, that isn't a valid input.");
+                    Console.WriteLine();
+                    Console.WriteLine("Either: (1) your withdrawal amount will cause your account to go negative,");
+                    Console.WriteLine("        (2) you entered a negative number,");
+                    Console.WriteLine("     Or (3) you entered a non-number.");
+                    Console.WriteLine();
+                    Console.WriteLine("Do you want to try again?");
+                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    var choice = Console.ReadLine().ToUpper();
+                    if (choice == "Y")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        keepAsking = false;
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Sorry, that isn't a valid input. Try again.");
+                    Console.WriteLine();
+                    counter += 1;
+                }
+            }
+        }
+        //--------------------------------------------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------------------------//
+        public void TransferFromSavings()
+        {
+            var keepAsking = true;
+            var counter = 0;
+            while (keepAsking)
+            {
+                Console.WriteLine();
+                Console.WriteLine("How much money would you like to transfer from savings to checking? ");
+                double amountMoney;
+                var isThisGoodInput = Double.TryParse(Console.ReadLine(), out amountMoney);
+                if (isThisGoodInput && amountMoney > 0 && ((savingsTotal() - amountMoney) >= 0))
+                {
+                    var newTransaction = new Transaction();
+                    newTransaction.TransactionType = "withdraw for transfer";
+                    newTransaction.Account = "savings";
+                    newTransaction.Amount = amountMoney;
+                    transactions.Add(newTransaction);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine();
+                    Console.WriteLine("Funds withdrawn from savings account.");
+                    var newTransaction2 = new Transaction();
+                    newTransaction2.TransactionType = "deposit for transfer";
+                    newTransaction2.Account = "checking";
+                    Console.WriteLine();
+                    newTransaction2.Amount = amountMoney;
+                    transactions.Add(newTransaction2);
+                    SaveTransactionsToCSV();
+                    Console.WriteLine();
+                    Console.WriteLine("Funds deposited to checking account.");
+                    Console.WriteLine();
+                    keepAsking = false;
+                }
+                else if (counter == 3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Sorry, that isn't a valid input.");
+                    Console.WriteLine();
+                    Console.WriteLine("Either: (1) your withdrawal amount will cause your account to go negative,");
+                    Console.WriteLine("        (2) you entered a negative number,");
+                    Console.WriteLine("     Or (3) you entered a non-number.");
+                    Console.WriteLine();
+                    Console.WriteLine("Do you want to try again?");
+                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    var choice = Console.ReadLine().ToUpper();
+                    if (choice == "Y")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        keepAsking = false;
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Sorry, that isn't a valid input. Try again.");
+                    Console.WriteLine();
+                    counter += 1;
+                }
+            }
+        }
+        //--------------------------------------------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------------------------//
         public void GetAllTransactions()
         {
             foreach (var transaction in transactions)
@@ -274,6 +415,7 @@ namespace FirstBankOfSuncoast
             Console.WriteLine("(C)heck Account Balance");
             Console.WriteLine("(D)eposit Funds");
             Console.WriteLine("(W)ithdraw Funds");
+            Console.WriteLine("(T)ransfer Funds");
             // Console.WriteLine("(T)ransfer Funds");
             Console.WriteLine("(V)iew All Transactions");
             Console.WriteLine("(Q)uit the Application");
@@ -453,10 +595,60 @@ namespace FirstBankOfSuncoast
                             }
                         }
                         break;
-                    // case "T": >>>>>>>>>> for transfer function
-                    //     Console.Clear();
-                    //     Console.WriteLine();
-                    //     break;
+                    case "T": // for transfer function
+                        Console.Clear();
+                        var keepAsking4 = true;
+                        var counter4 = 0;
+                        while (keepAsking4)
+                        {
+                            Console.WriteLine("");
+                            Console.Write("Transfer (1) from Savings to Checking or (2) from Checking to Savings? (Press 1 or 2 then press Enter): ");
+                            var accountSelection4 = Console.ReadLine().ToUpper();
+                            if (accountSelection4 == "1")
+                            {
+                                userDatabase.TransferFromSavings();
+                                Console.WriteLine($"Savings Balance: ${userDatabase.savingsTotal()}");
+                                Console.WriteLine($"Checking Balance: ${userDatabase.checkingTotal()}");
+                                Console.WriteLine();
+                                keepAsking4 = false;
+                            }
+                            else if (accountSelection4 == "2")
+                            {
+                                userDatabase.TransferFromChecking();
+                                Console.WriteLine($"Checking Balance: ${userDatabase.checkingTotal()}");
+                                Console.WriteLine($"Savings Balance: ${userDatabase.savingsTotal()}");
+                                Console.WriteLine();
+                                keepAsking4 = false;
+                            }
+                            else if (counter4 == 3)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Sorry, that isn't a valid input. You have to press 1 or 2.");
+                                Console.WriteLine();
+                                Console.WriteLine("Do you want to try again?");
+                                Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                                var choice4 = Console.ReadLine().ToUpper();
+                                if (choice4 == "Y")
+                                {
+                                    Console.Clear();
+                                    continue;
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    keepAsking4 = false;
+                                }
+                                Console.WriteLine();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Sorry, that isn't a valid input. Try again.");
+                                Console.WriteLine();
+                                counter4 += 1;
+                            }
+                        }
+                        break;
                     case "V":
                         Console.Clear();
                         Console.WriteLine("");
