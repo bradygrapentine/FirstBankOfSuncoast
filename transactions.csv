@@ -1,0 +1,41 @@
+TransactionType,Account,Amount,UserID,TimeOfTransaction
+deposit,savings,5,brady,04/26/2021 00:19:27
+deposit,checking,5,brady,04/26/2021 00:20:55
+deposit,savings,5,brady,04/26/2021 00:22:49
+deposit,checking,5,brady,04/26/2021 00:23:01
+deposit,savings,5,brady,04/26/2021 00:23:08
+withdraw,savings,5,brady,04/26/2021 00:25:08
+withdraw,checking,5,brady,04/26/2021 00:25:16
+withdraw for transfer,savings,5,brady,04/26/2021 00:30:08
+deposit for transfer,checking,5,brady,04/26/2021 00:30:08
+withdraw for transfer,checking,5,brady,04/26/2021 00:31:38
+deposit for transfer,savings,5,brady,04/26/2021 00:31:38
+withdraw for transfer,savings,5,brady,04/26/2021 00:32:19
+deposit for transfer,checking,5,brady,04/26/2021 00:32:19
+deposit,checking,5,brady,04/26/2021 00:33:31
+deposit,savings,5,brady,04/26/2021 00:35:42
+deposit,checking,5,brady,04/26/2021 00:36:13
+deposit,savings,5,brady,04/26/2021 00:36:27
+withdraw for transfer,savings,5,brady,04/26/2021 00:49:39
+deposit for transfer,checking,5,brady,04/26/2021 00:49:39
+withdraw for transfer,checking,5,brady,04/26/2021 00:49:49
+deposit for transfer,savings,5,brady,04/26/2021 00:49:49
+withdraw,savings,5,brady,04/26/2021 00:49:59
+deposit,savings,5,brady,04/26/2021 00:50:05
+withdraw,checking,5,brady,04/26/2021 00:50:13
+deposit,checking,5,brady,04/26/2021 00:50:21
+deposit,savings,5,brady,04/26/2021 00:52:37
+deposit,savings,5,brady,04/26/2021 00:52:51
+deposit,checking,5,brady,04/26/2021 00:52:56
+withdraw,savings,5,brady,04/26/2021 00:53:10
+withdraw,checking,5,brady,04/26/2021 00:53:20
+withdraw for transfer,savings,5,brady,04/26/2021 00:53:43
+deposit for transfer,checking,5,brady,04/26/2021 00:53:43
+withdraw for transfer,checking,5,brady,04/26/2021 00:53:59
+deposit for transfer,savings,5,brady,04/26/2021 00:53:59
+deposit,savings,100,kortney,04/26/2021 01:00:00
+withdraw,savings,5,kortney,04/26/2021 01:00:14
+deposit,checking,10,kortney,04/26/2021 01:00:18
+withdraw,checking,5,kortney,04/26/2021 01:00:23
+withdraw for transfer,savings,50,kortney,04/26/2021 01:00:32
+deposit for transfer,checking,50,kortney,04/26/2021 01:00:32
