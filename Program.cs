@@ -5,14 +5,10 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 
-/*
-Still need to clean up output format and source code, but the application functions as it should, besides the issue with infinite deposit loops (only presents an issue if the user mistakenly selects deposit). 
->reset counters
-*/
+// Most of the remaining work is stylistic and DRY-related. Problem area commented out and explained in function header.
 
 namespace FirstBankOfSuncoast
 {
-
     class User
     {
         public string UserID { get; set; }
@@ -50,14 +46,14 @@ namespace FirstBankOfSuncoast
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
-        public void RequestUserIDAndPassword()
+        public void RequestUserIDAndPassword() // Works a little weirdly, but I think I prefer it because it prompts the user for their username every failed log-in attempt. Could iron out this loop.
         {
             Console.Clear();
             var keepAsking = true;
             var counter = 0;
             while (keepAsking)
             {
-                Console.Write("Please enter your username (Usernames are case-sensitive): ");
+                Console.Write("Please enter your username (usernames are case-sensitive): ");
                 var inputtedUserID = Console.ReadLine();
                 if (users.Any(user => user.UserID == inputtedUserID))
                 {
@@ -133,12 +129,20 @@ namespace FirstBankOfSuncoast
             var counter = 0;
             while (keepAsking)
             {
-                Console.Write("Please Enter Your New Username (Usernames are case-sensitive): ");
+                Console.WriteLine("Please enter your new username below. Usernames are case-sensitive.");
                 var newUserID = Console.ReadLine();
-                if (users.Any(user => user.UserID == newUserID))
+                if (users.Any(user => user.UserID == newUserID) && counter != 3)
                 {
                     Console.Clear();
                     Console.WriteLine("That username is taken. Try again.");
+                    Console.WriteLine();
+                    counter += 1;
+                    continue;
+                }
+                else if (newUserID == "" && counter != 3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid username. Try again.");
                     Console.WriteLine();
                     counter += 1;
                     continue;
@@ -147,7 +151,7 @@ namespace FirstBankOfSuncoast
                 {
                     Console.Clear();
                     counter = 0;
-                    Console.WriteLine("Sorry, that username is taken. You have to choose a different one.");
+                    Console.WriteLine("Sorry, that username is invalid or taken. You have to choose a different one.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
                     Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
@@ -165,16 +169,19 @@ namespace FirstBankOfSuncoast
                 }
                 else
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("Available Username selected.");
-
+                    Console.Clear();
                     var keepAsking2 = true;
                     var counter2 = 0;
                     while (keepAsking2)
                     {
-                        Console.Clear();
-                        Console.WriteLine("Please Enter Your New Password Below.");
-                        Console.Write("(Passwords are case-sensitive and must contain a number, a lowercase letter, a capital letter, and be at least 8 characters long): ");
+                        Console.WriteLine("Passwords are case-sensitive and must meet the following requirements:");
+                        Console.WriteLine();
+                        Console.WriteLine("  (1) at least 8 characters long");
+                        Console.WriteLine("  (2) contain a number");
+                        Console.WriteLine("  (3) contain a lowercase letter");
+                        Console.WriteLine("  (4) contain a capital letter");
+                        Console.WriteLine();
+                        Console.Write("Please enter your new password: ");
                         var newPassWord = Console.ReadLine();
                         if (newPassWord.Count() >= 8 && newPassWord.Any(char.IsLower) && newPassWord.Any(char.IsUpper) && newPassWord.Any(char.IsDigit))
                         {
@@ -192,7 +199,7 @@ namespace FirstBankOfSuncoast
                         else if (counter2 == 3)
                         {
                             Console.Clear();
-                            counter = 0;
+                            counter2 = 0;
                             Console.WriteLine("Sorry, that password is invalid. You have to choose a different one.");
                             Console.WriteLine();
                             Console.WriteLine("Do you want to try again?");
@@ -294,7 +301,7 @@ namespace FirstBankOfSuncoast
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
-        public void DepositToSavings(User user) // need failsafe to escape deposit loop
+        public void DepositToSavings(User user)
         {
             var newTransaction = new Transaction();
             newTransaction.TransactionType = "deposit";
@@ -315,13 +322,14 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine();
                     Console.WriteLine("Funds deposited to savings account.");
                     Console.WriteLine($"Savings Balance: ${savingsTotal(user)}");
+                    Console.WriteLine();
                     keepAsking = false;
                 }
                 else if (counter == 3)
                 {
                     Console.Clear();
                     counter = 0;
-                    Console.WriteLine("Sorry, you must deposit more than 0 cents.");
+                    Console.WriteLine("Sorry, you have to select a number greater than 0.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
                     Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
@@ -348,7 +356,7 @@ namespace FirstBankOfSuncoast
         }
         //--------------------------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------------------------//
-        public void DepositToChecking(User user) // need failsafe to escape deposit loop
+        public void DepositToChecking(User user)
         {
             var newTransaction = new Transaction();
             newTransaction.TransactionType = "deposit";
@@ -369,13 +377,14 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine();
                     Console.WriteLine("Funds deposited to checking account.");
                     Console.WriteLine($"Checking Balance: ${checkingTotal(user)}");
+                    Console.WriteLine();
                     keepAsking = false;
                 }
                 else if (counter == 3)
                 {
                     Console.Clear();
                     counter = 0;
-                    Console.WriteLine("Sorry, you must deposit more than 0 cents.");
+                    Console.WriteLine("Sorry, you have to select a number greater than 0.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
                     Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
@@ -423,6 +432,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine();
                     Console.WriteLine("Funds withdrawn from savings account.");
                     Console.WriteLine($"Savings Balance: ${savingsTotal(user)}");
+                    Console.WriteLine();
                     keepAsking = false;
                 }
                 else if (counter == 3)
@@ -481,6 +491,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine();
                     Console.WriteLine("Funds withdrawn from checking account.");
                     Console.WriteLine($"Checking Balance: ${checkingTotal(user)}");
+                    Console.WriteLine();
                     keepAsking = false;
                 }
                 else if (counter == 3)
@@ -522,9 +533,9 @@ namespace FirstBankOfSuncoast
         {
             var keepAsking = true;
             var counter = 0;
+            Console.WriteLine();
             while (keepAsking)
             {
-                Console.WriteLine();
                 Console.Write("How much money would you like to transfer from checking to savings? ");
                 double amountMoney;
                 var isThisGoodInput = Double.TryParse(Console.ReadLine(), out amountMoney);
@@ -592,9 +603,9 @@ namespace FirstBankOfSuncoast
         {
             var keepAsking = true;
             var counter = 0;
+            Console.WriteLine();
             while (keepAsking)
             {
-                Console.WriteLine();
                 Console.Write("How much money would you like to transfer from savings to checking? ");
                 double amountMoney;
                 var isThisGoodInput = Double.TryParse(Console.ReadLine(), out amountMoney);
@@ -621,6 +632,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine();
                     Console.WriteLine($"Savings Balance: ${savingsTotal(user)}");
                     Console.WriteLine($"Checking Balance: ${checkingTotal(user)}");
+                    Console.WriteLine();
                     keepAsking = false;
                 }
                 else if (counter == 3)
@@ -980,6 +992,7 @@ namespace FirstBankOfSuncoast
                             Console.Clear();
                             Console.WriteLine();
                             Console.WriteLine("Retrieving transactions...");
+                            Console.WriteLine();
                             userDatabase.GetAllTransactions(users.user);
                             Console.WriteLine("User transactions loaded.");
                             Console.WriteLine();
