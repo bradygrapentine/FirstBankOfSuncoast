@@ -39,3 +39,13 @@ deposit,checking,10,kortney,04/26/2021 01:00:18
 withdraw,checking,5,kortney,04/26/2021 01:00:23
 withdraw for transfer,savings,50,kortney,04/26/2021 01:00:32
 deposit for transfer,checking,50,kortney,04/26/2021 01:00:32
+withdraw for transfer,savings,5,kortney,04/26/2021 01:19:43
+deposit for transfer,checking,5,kortney,04/26/2021 01:19:43
+withdraw for transfer,checking,5,kortney,04/26/2021 01:20:16
+deposit for transfer,savings,5,kortney,04/26/2021 01:20:16
+withdraw for transfer,savings,5,brady,04/26/2021 01:21:34
+deposit for transfer,checking,5,brady,04/26/2021 01:21:34
+withdraw for transfer,checking,5,brady,04/26/2021 01:21:40
+deposit for transfer,savings,5,brady,04/26/2021 01:21:40
+deposit,savings,4,dash,04/26/2021 02:02:46
+deposit,savings,3,brady,04/26/2021 02:03:20

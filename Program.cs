@@ -73,18 +73,18 @@ namespace FirstBankOfSuncoast
                         match = true;
                         keepAsking = false;
                     }
-                    else if (counter == 3)
+                    else
                     {
+                        counter = 0;
                         Console.Clear();
                         Console.WriteLine("Password incorrect.");
                         Console.WriteLine();
                         Console.WriteLine("Do you want to try again?");
-                        Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
+                        Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
                         var choice1 = Console.ReadLine().ToUpper();
                         if (choice1 == "Y")
                         {
                             Console.Clear();
-                            counter = 0;
                             continue;
                         }
                         else
@@ -93,27 +93,19 @@ namespace FirstBankOfSuncoast
                             keepAsking = false;
                         }
                     }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Password incorrect.");
-                        Console.WriteLine();
-                        counter += 1;
-                        continue;
-                    }
                 }
                 else if (counter == 3)
                 {
                     Console.Clear();
+                    counter = 0;
                     Console.WriteLine("Username not in database.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
                     var choice2 = Console.ReadLine().ToUpper();
                     if (choice2 == "Y")
                     {
                         Console.Clear();
-                        counter = 0;
                         continue;
                     }
                     else
@@ -154,10 +146,11 @@ namespace FirstBankOfSuncoast
                 else if (counter == 3)
                 {
                     Console.Clear();
+                    counter = 0;
                     Console.WriteLine("Sorry, that username is taken. You have to choose a different one.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
                     var choice = Console.ReadLine().ToUpper();
                     if (choice == "Y")
                     {
@@ -199,10 +192,11 @@ namespace FirstBankOfSuncoast
                         else if (counter2 == 3)
                         {
                             Console.Clear();
+                            counter = 0;
                             Console.WriteLine("Sorry, that password is invalid. You have to choose a different one.");
                             Console.WriteLine();
                             Console.WriteLine("Do you want to try again?");
-                            Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
+                            Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the Log-In Menu) ");
                             var choice2 = Console.ReadLine().ToUpper();
                             if (choice2 == "Y")
                             {
@@ -307,6 +301,7 @@ namespace FirstBankOfSuncoast
             newTransaction.Account = "savings";
             newTransaction.UserID = user.UserID;
             var keepAsking = true;
+            var counter = 0;
             while (keepAsking)
             {
                 Console.Write("How much money would you like to deposit into your savings account? ");
@@ -322,16 +317,32 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine($"Savings Balance: ${savingsTotal(user)}");
                     keepAsking = false;
                 }
-                else if (isThisGoodInput && amountMoney == 0)
+                else if (counter == 3)
                 {
                     Console.Clear();
-                    keepAsking = false;
+                    counter = 0;
+                    Console.WriteLine("Sorry, you must deposit more than 0 cents.");
+                    Console.WriteLine();
+                    Console.WriteLine("Do you want to try again?");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    var choice = Console.ReadLine().ToUpper();
+                    if (choice == "Y")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        keepAsking = false;
+                    }
                 }
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("Sorry, that isn't a valid input. Try again.");
                     Console.WriteLine();
+                    counter += 1;
                 }
             }
         }
@@ -344,6 +355,7 @@ namespace FirstBankOfSuncoast
             newTransaction.Account = "checking";
             newTransaction.UserID = user.UserID;
             var keepAsking = true;
+            var counter = 0;
             while (keepAsking)
             {
                 Console.Write("How much money would you like to deposit into your checking account? ");
@@ -359,15 +371,31 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine($"Checking Balance: ${checkingTotal(user)}");
                     keepAsking = false;
                 }
-                else if (isThisGoodInput && amountMoney == 0)
+                else if (counter == 3)
                 {
                     Console.Clear();
-                    keepAsking = false;
+                    counter = 0;
+                    Console.WriteLine("Sorry, you must deposit more than 0 cents.");
+                    Console.WriteLine();
+                    Console.WriteLine("Do you want to try again?");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    var choice = Console.ReadLine().ToUpper();
+                    if (choice == "Y")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        keepAsking = false;
+                    }
                 }
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("Sorry, that isn't a valid input. Try again.");
+                    counter += 1;
                     Console.WriteLine();
                 }
             }
@@ -400,6 +428,7 @@ namespace FirstBankOfSuncoast
                 else if (counter == 3)
                 {
                     Console.Clear();
+                    counter = 0;
                     Console.WriteLine("Sorry, that isn't a valid input.");
                     Console.WriteLine();
                     Console.WriteLine("Either: (1) your withdrawal amount will cause your account to go negative,");
@@ -407,7 +436,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine("     Or (3) you entered a non-number.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                     var choice = Console.ReadLine().ToUpper();
                     if (choice == "Y")
                     {
@@ -457,6 +486,7 @@ namespace FirstBankOfSuncoast
                 else if (counter == 3)
                 {
                     Console.Clear();
+                    counter = 0;
                     Console.WriteLine("Sorry, that isn't a valid input.");
                     Console.WriteLine();
                     Console.WriteLine("Either: (1) your withdrawal amount will cause your account to go negative,");
@@ -464,7 +494,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine("     Or (3) you entered a non-number.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                     var choice = Console.ReadLine().ToUpper();
                     if (choice == "Y")
                     {
@@ -518,6 +548,7 @@ namespace FirstBankOfSuncoast
                     transactions.Add(newTransaction2);
                     SaveTransactionsToCSV();
                     Console.WriteLine("Funds deposited to savings account.");
+                    Console.WriteLine();
                     Console.WriteLine($"Checking Balance: ${checkingTotal(user)}");
                     Console.WriteLine($"Savings Balance: ${savingsTotal(user)}");
                     Console.WriteLine();
@@ -526,6 +557,7 @@ namespace FirstBankOfSuncoast
                 else if (counter == 3)
                 {
                     Console.Clear();
+                    counter = 0;
                     Console.WriteLine("Sorry, that isn't a valid input.");
                     Console.WriteLine();
                     Console.WriteLine("Either: (1) your transfer amount will cause your account to go negative,");
@@ -533,7 +565,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine("     Or (3) you entered a non-number.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                     var choice = Console.ReadLine().ToUpper();
                     if (choice == "Y")
                     {
@@ -550,7 +582,6 @@ namespace FirstBankOfSuncoast
                 {
                     Console.Clear();
                     Console.WriteLine("Sorry, that isn't a valid input. Try again.");
-                    Console.WriteLine();
                     counter += 1;
                 }
             }
@@ -563,6 +594,7 @@ namespace FirstBankOfSuncoast
             var counter = 0;
             while (keepAsking)
             {
+                Console.WriteLine();
                 Console.Write("How much money would you like to transfer from savings to checking? ");
                 double amountMoney;
                 var isThisGoodInput = Double.TryParse(Console.ReadLine(), out amountMoney);
@@ -594,6 +626,7 @@ namespace FirstBankOfSuncoast
                 else if (counter == 3)
                 {
                     Console.Clear();
+                    counter = 0;
                     Console.WriteLine("Sorry, that isn't a valid input.");
                     Console.WriteLine();
                     Console.WriteLine("Either: (1) your transfer amount will cause your account to go negative,");
@@ -601,7 +634,7 @@ namespace FirstBankOfSuncoast
                     Console.WriteLine("     Or (3) you entered a non-number.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                     var choice = Console.ReadLine().ToUpper();
                     if (choice == "Y")
                     {
@@ -618,7 +651,6 @@ namespace FirstBankOfSuncoast
                 {
                     Console.Clear();
                     Console.WriteLine("Sorry, that isn't a valid input. Try again.");
-                    Console.WriteLine();
                     counter += 1;
                 }
             }
@@ -691,7 +723,7 @@ namespace FirstBankOfSuncoast
             while (keepGoing && !users.match)
             {
                 Console.WriteLine("(L)og In, (C)reate New Account, or (Q)uit");
-                Console.Write("(Press L, C, or Q then press Enter): ");
+                Console.Write("(Press L, C, or Q, then press Enter): ");
                 var choice = Console.ReadLine().ToUpper();
                 if (choice == "L")
                 {
@@ -706,11 +738,12 @@ namespace FirstBankOfSuncoast
                 }
                 else if (counter1 == 3)
                 {
+                    counter1 = 0;
                     Console.Clear();
-                    Console.WriteLine("Sorry, that isn't a valid input. You have to press L or C.");
+                    Console.WriteLine("Sorry, that isn't a valid input. You have to press L, C, or Q, then Enter.");
                     Console.WriteLine();
                     Console.WriteLine("Do you want to try again?");
-                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to quit the application) ");
+                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to quit the application) ");
                     var choice2 = Console.ReadLine().ToUpper();
                     if (choice2 == "Y")
                     {
@@ -755,7 +788,7 @@ namespace FirstBankOfSuncoast
                             var counter3 = 0;
                             while (keepAsking1)
                             {
-                                Console.Write("Savings or Checking? (Press C or S then press Enter): ");
+                                Console.Write("Savings or Checking? (Press C or S, then press Enter): ");
                                 var accountSelection1 = Console.ReadLine().ToUpper();
                                 if (accountSelection1 == "S")
                                 {
@@ -774,10 +807,11 @@ namespace FirstBankOfSuncoast
                                 else if (counter3 == 3)
                                 {
                                     Console.Clear();
+                                    counter3 = 0;
                                     Console.WriteLine("Sorry, that isn't a valid input. You have to press S or C.");
                                     Console.WriteLine();
                                     Console.WriteLine("Do you want to try again?");
-                                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                                     var choice2 = Console.ReadLine().ToUpper();
                                     if (choice2 == "Y")
                                     {
@@ -805,28 +839,27 @@ namespace FirstBankOfSuncoast
                             var keepAsking2 = true;
                             while (keepAsking2)
                             {
-                                Console.Write("Savings or Checking? (Press C or S then press Enter): ");
+                                Console.Write("Savings or Checking? (Press C or S, then press Enter): ");
                                 var accountSelection2 = Console.ReadLine().ToUpper();
                                 Console.WriteLine();
                                 if (accountSelection2 == "S")
                                 {
                                     userDatabase.DepositToSavings(users.user);
-                                    Console.WriteLine();
                                     keepAsking2 = false;
                                 }
                                 else if (accountSelection2 == "C")
                                 {
                                     userDatabase.DepositToChecking(users.user);
-                                    Console.WriteLine();
                                     keepAsking2 = false;
                                 }
                                 else if (counter4 == 3)
                                 {
                                     Console.Clear();
+                                    counter4 = 0;
                                     Console.WriteLine("Sorry, that isn't a valid input. You have to press S or C.");
                                     Console.WriteLine();
                                     Console.WriteLine("Do you want to try again?");
-                                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                                     var choice3 = Console.ReadLine().ToUpper();
                                     if (choice3 == "Y")
                                     {
@@ -854,28 +887,27 @@ namespace FirstBankOfSuncoast
                             var counter5 = 0;
                             while (keepAsking3)
                             {
-                                Console.Write("Savings or Checking? (Press C or S then press Enter): ");
+                                Console.Write("Savings or Checking? (Press C or S, then press Enter): ");
                                 var accountSelection3 = Console.ReadLine().ToUpper();
                                 Console.WriteLine();
                                 if (accountSelection3 == "S")
                                 {
                                     userDatabase.WithdrawFromSavings(users.user);
-                                    Console.WriteLine();
                                     keepAsking3 = false;
                                 }
                                 else if (accountSelection3 == "C")
                                 {
                                     userDatabase.WithdrawFromChecking(users.user);
-                                    Console.WriteLine();
                                     keepAsking3 = false;
                                 }
                                 else if (counter5 == 3)
                                 {
                                     Console.Clear();
+                                    counter5 = 0;
                                     Console.WriteLine("Sorry, that isn't a valid input. You have to press S or C.");
                                     Console.WriteLine();
                                     Console.WriteLine("Do you want to try again?");
-                                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                                     var choice4 = Console.ReadLine().ToUpper();
                                     if (choice4 == "Y")
                                     {
@@ -897,33 +929,32 @@ namespace FirstBankOfSuncoast
                                 }
                             }
                             break;
-                        case "T": // for transfer function
+                        case "T":
                             Console.Clear();
                             var keepAsking4 = true;
                             var counter6 = 0;
                             while (keepAsking4)
                             {
-                                Console.Write("Transfer (1) from Savings to Checking or (2) from Checking to Savings? (Press 1 or 2 then press Enter): ");
+                                Console.Write("Transfer (1) from Savings to Checking or (2) from Checking to Savings? (Press 1 or 2, then press Enter): ");
                                 var accountSelection4 = Console.ReadLine().ToUpper();
                                 if (accountSelection4 == "1")
                                 {
                                     userDatabase.TransferFromSavings(users.user);
-                                    Console.WriteLine();
                                     keepAsking4 = false;
                                 }
                                 else if (accountSelection4 == "2")
                                 {
                                     userDatabase.TransferFromChecking(users.user);
-                                    Console.WriteLine();
                                     keepAsking4 = false;
                                 }
                                 else if (counter6 == 3)
                                 {
                                     Console.Clear();
+                                    counter6 = 0;
                                     Console.WriteLine("Sorry, that isn't a valid input. You have to press 1 or 2.");
                                     Console.WriteLine();
                                     Console.WriteLine("Do you want to try again?");
-                                    Console.Write("(Press Y then press enter for 'Yes'. Press Enter to return to the menu) ");
+                                    Console.Write("(Press Y, then press enter for 'Yes'. Press Enter to return to the menu) ");
                                     var choice5 = Console.ReadLine().ToUpper();
                                     if (choice5 == "Y")
                                     {
@@ -947,14 +978,20 @@ namespace FirstBankOfSuncoast
                             break;
                         case "V":
                             Console.Clear();
+                            Console.WriteLine();
+                            Console.WriteLine("Retrieving transactions...");
                             userDatabase.GetAllTransactions(users.user);
+                            Console.WriteLine("User transactions loaded.");
+                            Console.WriteLine();
                             break;
                         case "Q":
                             Console.Clear();
                             keepGoing2 = false;
                             break;
-                        case "":
+                        default:
                             Console.Clear();
+                            Console.WriteLine("Press C, D, W, T, V,or Q to select one of the options, then press Enter.");
+                            Console.WriteLine("");
                             break;
                     }
                 }
